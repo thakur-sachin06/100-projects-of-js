@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.game-container {
+  width: 800px;
+  height: 600px;
+  background: rgba(222, 222, 222, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+#result {
+  width: 468px;
+  height: 50px;
+  background-color: white;
+  position: relative;
+  margin: 30px;
+  left: 18%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  color: red;
+  margin-top: 95px;
+}
+
+.player-container {
+  display: inline-block;
+  margin-bottom: 50px;
+}
+
+#player-name {
+  margin-top: 30px;
+}
+
+#player1,
+#player2 {
+  display: inline-block;
+  background: rgb(221, 214, 214);
+  width: 200px;
+  height: 200px;
+  margin: 25px;
+  text-align: center;
+  padding: 16px;
+  position: relative;
+  left: 20%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.7);
+  font-size: 7em;
+}
+
+button {
+  width: 300px;
+  padding: 10px;
+  position: relative;
+  left: 35%;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+  font-size: 20px;
+  border: none;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s;
+  margin-top: 30px;
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.7);
+}
+
+.dice-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  background-color: white;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.black-dot {
+  background-color: black;
+}
+
+.white-dot {
+  background-color: white;
+}
+
+.dice-dot {
+  color: black;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
+}
