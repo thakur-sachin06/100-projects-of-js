@@ -10,6 +10,10 @@ function setInputValue(e) {
 }
 
 function calculateTip() {
+  if (cost <= 0) {
+    alert("Please input valid cost");
+    return;
+  }
   totalTip = Math.floor(cost * 0.25);
   output.textContent = `You Should Tip ₹${totalTip} on ₹${cost}`;
   output.style.visibility = "unset";
