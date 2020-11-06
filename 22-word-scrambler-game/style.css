@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  background: #ddd;
+  padding: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 90%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  min-height: 100px;
+}
+
+.message-container {
+  margin-bottom: 20px;
+  background: white;
+  width: 80%;
+  height: 60px;
+  margin-top: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-to-guess {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 30px;
+  color: red;
+  text-align: center;
+}
+
+input {
+  height: 30px;
+  width: 250px;
+  margin-bottom: 30px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  height: 40px;
+  width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s;
+}
+
+button:active {
+  transform: translateY(2px);
+}
