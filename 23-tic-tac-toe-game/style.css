@@ -1,0 +1,40 @@
+.main-container {
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  width: 306px;
+}
+
+.grid-container > div {
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 0 0 1px #333333;
+  border: 1px solid #333333;
+  cursor: pointer;
+  line-height: 100px;
+  font-size: 60px;
+  text-align: center;
+}
+
+.restart-button {
+  padding: 10px 12px;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.winner {
+  font-size: 26px;
+  color: green;
+  margin-bottom: 20px;
+}
