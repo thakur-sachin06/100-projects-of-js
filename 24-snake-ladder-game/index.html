@@ -9,14 +9,16 @@
 
   <body>
     <div class="main-container">
-      <div class="container">
-        <h1>Snake Ladder Game</h1>
-        <div class="winner"></div>
-        <div class="grid-container" id="grid-container">
-            
+      <div class="game-container">
+        <div class="header">
+          <h1>Snake Ladder Game</h1>
+          <div class="btn-container">
+            <button class="restart-button">Restart Game</button>
+            <button class="roll-dice-btn" id="roll-dice-btn">Roll Dice</button>
+          </div>
+          <div class="winner"></div>
         </div>
-        <button class="restart-button" >Restart Game</button>
-        </div>
+        <div class="grid-container" id="grid-container"></div>
       </div>
     </div>
     <script src="script.js"></script>

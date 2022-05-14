@@ -4,13 +4,51 @@
   grid-auto-flow: dense;
 }
 
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 620px;
+  justify-content: space-between;
+}
+
 .box {
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   box-shadow: 0 0 0 1px #333333;
   border: 1px solid #333333;
   cursor: pointer;
-  font-size: 40px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 10px;
   text-align: center;
-  display: inline-block;
+}
+
+.red-dot {
+  background-color: red;
+  position: relative;
+}
+
+.green-dot {
+  background-color: green;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
 }
