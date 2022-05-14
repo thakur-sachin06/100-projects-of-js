@@ -4,10 +4,11 @@ let playerTurn = 0;
 let num = 100;
 let playersPosition = [0, 0];
 
-const container = document.getElementById("grid-container");
+const container = document.getElementById("board-container");
 const redDot = document.getElementById("red-dot");
 const greenDot = document.getElementById("green-dot");
 const rollDiceBtn = document.getElementById("roll-dice-btn");
+const player = document.getElementById("player-turn");
 
 function removePlayer() {
   const position = playersPosition[playerTurn];
@@ -45,6 +46,7 @@ function rollDice() {
       movePlayer();
     } else {
       playerTurn = playerTurn === 0 ? 1 : 0;
+      player.innerHTML = `Player ${playerTurn + 1}`;
     }
   } else {
     removePlayer();
@@ -52,6 +54,7 @@ function rollDice() {
     movePlayer();
     if (diceNum !== 6) {
       playerTurn = playerTurn === 0 ? 1 : 0;
+      player.innerHTML = `Player ${playerTurn + 1}`;
     }
   }
 }
