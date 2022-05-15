@@ -94,25 +94,39 @@ const rollDiceBtn = document.getElementById("roll-dice-btn");
 const player = document.getElementById("player-turn");
 const diceContainer = document.getElementById("dice-container");
 
-let dice = document.createElement("div");
-diceContainer.appendChild(dice);
-
-function buildDice(diceNumber) {
+function buildDice() {
+  let dice = document.createElement("div");
   // die array will contain an array of positions where we want to show dots on dice.
-  let dieArray = diceDotPosition[diceNumber - 1];
-  const childDots = document.getElementsByClassName("dice-dot");
-  childDotsArr = Array.from(childDots);
-  debugger;
   // to show dots on dice at specific position
   for (let diceDots = 1; diceDots < 10; diceDots++) {
     let dot = document.createElement("div");
     dot.setAttribute("class", "dice-dot");
-    if (dieArray.includes(diceDots)) {
-      dot.classList.add("white-dot");
-    }
+    dot.setAttribute("id", diceDots);
     dice.appendChild(dot);
   }
   dice.setAttribute("class", "dice-container");
+  diceContainer.appendChild(dice);
+}
+
+function paintDice(diceNumber) {
+  // die array will contain an array of positions where we want to show dots on dice.
+  let dieArray = diceDotPosition[diceNumber - 1];
+  const childDots = document.getElementsByClassName("dice-dot");
+  childDotsArr = Array.from(childDots);
+  // to show dots on dice at specific position
+  childDotsArr.forEach((elt) => {
+    const diceId = elt.getAttribute("id");
+    if (dieArray.includes(diceId)) {
+      elt.classList.add("white-dot");
+    }
+  });
+  // for (let diceDots = 1; diceDots < 10; diceDots++) {
+  //   if (dieArray.includes(diceDots)) {
+  //     dot.classList.add("white-dot");
+  //   }
+  //   dice.appendChild(dot);
+  // }
+  // dice.setAttribute("class", "dice-container");
 }
 
 function removePlayer() {
@@ -216,3 +230,4 @@ const createBoard = () => {
 rollDiceBtn.addEventListener("click", rollDice);
 
 createBoard();
+buildDice();
