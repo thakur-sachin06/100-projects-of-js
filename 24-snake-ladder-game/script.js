@@ -4,11 +4,116 @@ let playerTurn = 0;
 let num = 100;
 let playersPosition = [0, 0];
 
+const diceFace = ["\u2680", "\u2681", "\u2682", "\u2683", "\u2684", "\u2685"];
+const diceDotPosition = [
+  [5],
+  [1, 9],
+  [1, 5, 9],
+  [1, 3, 7, 9],
+  [1, 3, 5, 7, 9],
+  [1, 3, 4, 6, 7, 9],
+];
+
+let snakesLadders = {
+  2: {
+    type: "ladder",
+    to: 23,
+  },
+  7: {
+    type: "ladder",
+    to: 29,
+  },
+  22: {
+    type: "ladder",
+    to: 41,
+  },
+  27: {
+    type: "snake",
+    to: 7,
+  },
+  28: {
+    type: "ladder",
+    to: 77,
+  },
+  30: {
+    type: "ladder",
+    to: 32,
+  },
+  35: {
+    type: "snake",
+    to: 5,
+  },
+  39: {
+    type: "snake",
+    to: 3,
+  },
+  44: {
+    type: "ladder",
+    to: 58,
+  },
+  59: {
+    type: "snake",
+    to: 46,
+  },
+  66: {
+    type: "snake",
+    to: 24,
+  },
+  70: {
+    type: "ladder",
+    to: 90,
+  },
+  80: {
+    type: "ladder",
+    to: 83,
+  },
+  87: {
+    type: "ladder",
+    to: 93,
+  },
+  89: {
+    type: "snake",
+    to: 67,
+  },
+  97: {
+    type: "snake",
+    to: 86,
+  },
+  99: {
+    type: "snake",
+    to: 26,
+  },
+};
+
+let snakeLadderBoxes = Object.keys(snakesLadders);
+
 const container = document.getElementById("board-container");
 const redDot = document.getElementById("red-dot");
 const greenDot = document.getElementById("green-dot");
 const rollDiceBtn = document.getElementById("roll-dice-btn");
 const player = document.getElementById("player-turn");
+const diceContainer = document.getElementById("dice-container");
+
+let dice = document.createElement("div");
+diceContainer.appendChild(dice);
+
+function buildDice(diceNumber) {
+  // die array will contain an array of positions where we want to show dots on dice.
+  let dieArray = diceDotPosition[diceNumber - 1];
+  const childDots = document.getElementsByClassName("dice-dot");
+  childDotsArr = Array.from(childDots);
+  debugger;
+  // to show dots on dice at specific position
+  for (let diceDots = 1; diceDots < 10; diceDots++) {
+    let dot = document.createElement("div");
+    dot.setAttribute("class", "dice-dot");
+    if (dieArray.includes(diceDots)) {
+      dot.classList.add("white-dot");
+    }
+    dice.appendChild(dot);
+  }
+  dice.setAttribute("class", "dice-container");
+}
 
 function removePlayer() {
   const position = playersPosition[playerTurn];
@@ -38,8 +143,20 @@ function movePlayer() {
   box.appendChild(dot);
 }
 
+function checkLadderOrSnake(diceNum) {
+  const index = snakeLadderBoxes.indexOf(diceNum.toString());
+  if (index >= 0) {
+    const ladderOrSnake = snakesLadders[diceNum];
+    playersPosition[playerTurn] =
+      playersPosition[playerTurn] + ladderOrSnake.to;
+  } else {
+    playersPosition[playerTurn] = playersPosition[playerTurn] + diceNum;
+  }
+}
+
 function rollDice() {
   const diceNum = Math.floor(Math.random() * 6) + 1;
+  buildDice(diceNum);
   if (playersPosition[playerTurn] === 0) {
     if (diceNum === 1 || diceNum === 6) {
       playersPosition[playerTurn] = 1;
@@ -50,7 +167,7 @@ function rollDice() {
     }
   } else {
     removePlayer();
-    playersPosition[playerTurn] = playersPosition[playerTurn] + diceNum;
+    checkLadderOrSnake(diceNum);
     movePlayer();
     if (diceNum !== 6) {
       playerTurn = playerTurn === 0 ? 1 : 0;
@@ -58,6 +175,15 @@ function rollDice() {
     }
   }
 }
+
+const paintBoxSnakeLadder = (box) => {
+  const item = snakesLadders[num];
+  if (item.type === "ladder") {
+    box.style.background = "#7ee57e";
+  } else {
+    box.style.background = "#ee7474";
+  }
+};
 
 const createBoard = () => {
   const frag = document.createDocumentFragment();
@@ -73,6 +199,13 @@ const createBoard = () => {
       box.classList.add("box");
       box.setAttribute("id", num);
       box.innerHTML = num;
+
+      // paint boxif snake or ladder is there
+      const index = snakeLadderBoxes.indexOf(num.toString());
+      if (index >= 0) {
+        paintBoxSnakeLadder(box);
+      }
+
       boxContainer.appendChild(box);
       num--;
     }
@@ -83,4 +216,3 @@ const createBoard = () => {
 rollDiceBtn.addEventListener("click", rollDice);
 
 createBoard();
-// movePlayer();

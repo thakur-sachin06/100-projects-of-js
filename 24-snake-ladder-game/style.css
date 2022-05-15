@@ -34,12 +34,13 @@
 }
 
 .red-dot {
-  background-color: red;
+  background-color: yellow;
   position: relative;
 }
 
 .green-dot {
-  background-color: green;
+  background-color: black;
+  color: white;
 }
 
 button {
@@ -49,4 +50,27 @@ button {
 
 #player-turn {
   color: red;
+}
+
+.dice-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  background-color: black;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.white-dot {
+  background-color: white;
+}
+
+.dice-dot {
+  color: black;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
 }
