@@ -2,7 +2,7 @@
 
 let playerTurn = 0;
 let num = 100;
-let playersPosition = [0, 0];
+let playersPosition = [10, 10];
 
 const diceFace = ["\u2680", "\u2681", "\u2682", "\u2683", "\u2684", "\u2685"];
 const diceDotPosition = [
@@ -93,6 +93,7 @@ const greenDot = document.getElementById("green-dot");
 const rollDiceBtn = document.getElementById("roll-dice-btn");
 const player = document.getElementById("player-turn");
 const diceContainer = document.getElementById("dice-container");
+const winnerContainer = document.getElementById("winner-container");
 
 function buildDice() {
   let dice = document.createElement("div");
@@ -116,22 +117,17 @@ function paintDice(diceNumber) {
   // to show dots on dice at specific position
   childDotsArr.forEach((elt) => {
     const diceId = elt.getAttribute("id");
-    if (dieArray.includes(diceId)) {
+    if (dieArray.includes(Number(diceId))) {
       elt.classList.add("white-dot");
+    } else {
+      elt.classList.remove("white-dot");
     }
   });
-  // for (let diceDots = 1; diceDots < 10; diceDots++) {
-  //   if (dieArray.includes(diceDots)) {
-  //     dot.classList.add("white-dot");
-  //   }
-  //   dice.appendChild(dot);
-  // }
-  // dice.setAttribute("class", "dice-container");
 }
 
 function removePlayer() {
   const position = playersPosition[playerTurn];
-  const box = document.getElementById(position);
+  const box = document.getElementById(`box-${position}`);
   let child;
   if (playerTurn === 0) {
     child = document.getElementsByClassName("red-dot");
@@ -143,9 +139,15 @@ function removePlayer() {
   }
 }
 
+function checkWinner() {
+  if (playersPosition[playerTurn] == 100) {
+    winnerContainer.innerHTML = `Player ${playerTurn + 1} won`;
+  }
+}
+
 function movePlayer() {
   const position = playersPosition[playerTurn];
-  const box = document.getElementById(position);
+  const box = document.getElementById(`box-${position}`);
   const dot = document.createElement("span");
   if (playerTurn === 0) {
     dot.classList.add("circle", "red-dot");
@@ -155,22 +157,26 @@ function movePlayer() {
     dot.innerHTML = "P2";
   }
   box.appendChild(dot);
+  checkWinner();
 }
 
 function checkLadderOrSnake(diceNum) {
-  const index = snakeLadderBoxes.indexOf(diceNum.toString());
+  if (playersPosition[playerTurn] + diceNum > 100) {
+    return;
+  }
+  playersPosition[playerTurn] = playersPosition[playerTurn] + diceNum;
+  const index = snakeLadderBoxes.indexOf(
+    playersPosition[playerTurn].toString()
+  );
   if (index >= 0) {
-    const ladderOrSnake = snakesLadders[diceNum];
-    playersPosition[playerTurn] =
-      playersPosition[playerTurn] + ladderOrSnake.to;
-  } else {
-    playersPosition[playerTurn] = playersPosition[playerTurn] + diceNum;
+    const ladderOrSnake = snakesLadders[playersPosition[playerTurn]];
+    playersPosition[playerTurn] = ladderOrSnake.to;
   }
 }
 
 function rollDice() {
   const diceNum = Math.floor(Math.random() * 6) + 1;
-  buildDice(diceNum);
+  paintDice(diceNum);
   if (playersPosition[playerTurn] === 0) {
     if (diceNum === 1 || diceNum === 6) {
       playersPosition[playerTurn] = 1;
@@ -211,7 +217,7 @@ const createBoard = () => {
     for (let j = num; j > i * 10; j--) {
       const box = document.createElement("div");
       box.classList.add("box");
-      box.setAttribute("id", num);
+      box.setAttribute("id", `box-${num}`);
       box.innerHTML = num;
 
       // paint boxif snake or ladder is there
