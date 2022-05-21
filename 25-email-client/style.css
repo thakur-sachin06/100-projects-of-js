@@ -17,7 +17,7 @@
 }
 
 .left-nav > ul > li {
-  padding: 20px 0;
+  padding: 10px 0;
   cursor: pointer;
 }
 
@@ -58,4 +58,21 @@
 
 .main-section {
   padding: 40px 60px;
+  font-size: 20px;
+  line-height: 30px;
+  color: rgb(52, 50, 50);
+}
+
+.unstarred {
+  border-radius: 50%;
+  padding: 6px;
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+  float: right;
+  background: white;
+}
+
+.starred-email {
+  background-color: gold;
 }
