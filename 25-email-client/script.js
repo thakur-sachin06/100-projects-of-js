@@ -33,6 +33,11 @@ const emails = [
 ];
 
 let activeEmail = emails[0].id;
+let numOfReadMails = 1;
+let numOfUnreadMails = emails.length - 2;
+
+const readMailsSpan = document.getElementById("read-mail-count");
+const unreadMailsSpan = document.getElementById("unread-mail-count");
 
 const emailContainer = document.getElementById("email-list");
 const mainSection = document.getElementById("main-section");
@@ -43,9 +48,14 @@ const showEmailContent = (id, item) => {
   mainSection.innerHTML = selectedEmail[0].body;
 
   if (!selectedEmail[0].isRead) {
+    numOfReadMails++;
     item.classList.remove("unread-email");
     selectedEmail[0].isRead = true;
   }
+  readMailsSpan.innerHTML = `${numOfReadMails} read mails`;
+  unreadMailsSpan.innerHTML = `${
+    emails.length - 1 - numOfReadMails
+  } unread mails`;
 };
 
 const toggleStarredEmail = (selectedEmailToStar) => {
