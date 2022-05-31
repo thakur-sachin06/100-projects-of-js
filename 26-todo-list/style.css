@@ -1,11 +1,30 @@
+* {
+  font-family: "Open Sans", sans-serif;
+}
+
 .main-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   width: 80%;
   margin: 40px 0;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   height: calc(100vh - 80px);
+  border-radius: 8px;
   border: 1px solid lightgray;
+}
+
+.main-container .tasks-list:not(:last-child) {
+  border-right: 1px solid lightgray;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
+.tasks {
+  margin: 20px 0;
 }
