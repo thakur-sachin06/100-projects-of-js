@@ -1,0 +1,11 @@
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 80%;
+  margin: 40px 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: calc(100vh - 80px);
+  border: 1px solid lightgray;
+}
