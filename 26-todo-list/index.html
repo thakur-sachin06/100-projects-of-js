@@ -18,7 +18,7 @@
       <div class="tasks-list" id="to-do-section">
         <span class="title">To-Do</span>
         <div id="task-container"></div>
-        <button class="add-button">Add New Task</button>
+        <button class="add-button" id="main-btn">Add New Task</button>
       </div>
       <div class="tasks-list" id="inprogress-section">
         <span class="title">In-Progress</span>
@@ -26,15 +26,23 @@
       <div class="tasks-list" id="completed-section">
         <span class="title">Completed</span>
       </div>
-      <div id="add-task">
-        <label>Task Name</label>
-        <input type="text" />
-        <select>
-          <option>To-Do</option>
-          <option>In-Progress</option>
-          <option>Completed</option>
-        </select>
-      </div>
+    </div>
+    <div class="modal" id="modal">
+      <div class="title">Add New Task</div>
+      <input
+        id="modal-input"
+        autofocus
+        placeholder="Enter Name..."
+        type="text"
+      />
+      <select id="modal-select">
+        <option value="TODO">To-Do</option>
+        <option value="INPROGRESS">In-Progress</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
+      <button class="add-button" style="margin-top: 20px" id="modal-add-btn">
+        Add
+      </button>
     </div>
     <script src="script.js"></script>
   </body>
