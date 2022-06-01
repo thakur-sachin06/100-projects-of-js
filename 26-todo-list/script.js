@@ -24,9 +24,9 @@ const toDoSection = document.getElementById("to-do-section");
 const inProgressSection = document.getElementById("inprogress-section");
 const completedSection = document.getElementById("completed-section");
 
-function toggleTasksInput(e, task) {
+function toggleTasksInput(e) {
   const isChecked = e.target.checked;
-  const toggledTask = document.getElementById(`task-${task.id}`);
+  const toggledTask = document.getElementById(e.target.getAttribute("id"));
   if (isChecked) {
     completedSection.appendChild(toggledTask);
   } else {
@@ -48,7 +48,6 @@ function createTasksList(tasks, section) {
     if (task.status === "COMPLETED") {
       input.checked = true;
     }
-    input.addEventListener("change", (e) => toggleTasksInput(e, task));
     const label = document.createElement("label");
     label.setAttribute("for", `task-${task.id}`);
     label.innerText = task.title;
@@ -59,6 +58,10 @@ function createTasksList(tasks, section) {
   });
   section.appendChild(fragment);
 }
+
+toDoSection.addEventListener("change", toggleTasksInput);
+inProgressSection.addEventListener("change", toggleTasksInput);
+completedSection.addEventListener("change", toggleTasksInput);
 
 createTasksList(todoTasks, toDoSection);
 createTasksList(inprogressTasks, inProgressSection);
