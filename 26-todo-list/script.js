@@ -20,7 +20,7 @@ const todoTasks = tasks.filter((task) => task.status === "TODO");
 const inprogressTasks = tasks.filter((task) => task.status === "INPROGRESS");
 const completedTasks = tasks.filter((task) => task.status === "COMPLETED");
 
-const toDoSection = document.getElementById("to-do-section");
+const toDoSection = document.getElementById("task-container");
 const inProgressSection = document.getElementById("inprogress-section");
 const completedSection = document.getElementById("completed-section");
 
@@ -45,6 +45,10 @@ function createTasksList(tasks, section) {
     input.setAttribute("name", `task-${task.id}`);
     input.setAttribute("value", task.title);
     input.setAttribute("id", `task-${task.id}`);
+    input.style.cursor = "pointer";
+    input.style.width = "20px";
+    input.style.height = "20px";
+
     if (task.status === "COMPLETED") {
       input.checked = true;
     }

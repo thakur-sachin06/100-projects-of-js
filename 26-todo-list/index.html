@@ -15,9 +15,26 @@
 
   <body>
     <div class="main-container">
-      <div class="tasks-list" id="to-do-section">To-Do List</div>
-      <div class="tasks-list" id="inprogress-section">In Progress</div>
-      <div class="tasks-list" id="completed-section">Completed Tasks</div>
+      <div class="tasks-list" id="to-do-section">
+        <span class="title">To-Do</span>
+        <div id="task-container"></div>
+        <button class="add-button">Add New Task</button>
+      </div>
+      <div class="tasks-list" id="inprogress-section">
+        <span class="title">In-Progress</span>
+      </div>
+      <div class="tasks-list" id="completed-section">
+        <span class="title">Completed</span>
+      </div>
+      <div id="add-task">
+        <label>Task Name</label>
+        <input type="text" />
+        <select>
+          <option>To-Do</option>
+          <option>In-Progress</option>
+          <option>Completed</option>
+        </select>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>

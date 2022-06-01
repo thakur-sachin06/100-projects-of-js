@@ -26,5 +26,39 @@
 }
 
 .tasks {
-  margin: 20px 0;
+  margin-top: 10px;
+  background: rgb(233, 243, 234);
+  padding: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  font-weight: 600;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 30px;
+  display: block;
+  text-align: center;
+}
+
+.add-button {
+  width: 200px;
+  margin-top: auto;
+  padding: 10px 30px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  background: rgb(77, 77, 236);
+  color: white;
+}
+
+.add-button:active {
+  transform: translateY(1px);
 }
