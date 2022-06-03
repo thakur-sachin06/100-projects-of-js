@@ -83,6 +83,7 @@ function createTask(task) {
   label.style.marginLeft = "10px";
   container.appendChild(input);
   container.appendChild(label);
+  container.setAttribute('draggable', true)
   return container;
 }
 
