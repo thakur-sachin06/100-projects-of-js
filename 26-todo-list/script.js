@@ -60,6 +60,20 @@ function toggleTasksInput(e) {
   }
 }
 
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
 function createTask(task) {
   const container = document.createElement("div");
   container.setAttribute("id", `task-${task.id}`);
@@ -83,7 +97,8 @@ function createTask(task) {
   label.style.marginLeft = "10px";
   container.appendChild(input);
   container.appendChild(label);
-  container.setAttribute('draggable', true)
+  container.setAttribute("draggable", true);
+  container.addEventListener("ondragstart", drag);
   return container;
 }
 
@@ -103,6 +118,15 @@ function createTasks() {
   toDoSection.addEventListener("change", toggleTasksInput);
   inProgressSection.addEventListener("change", toggleTasksInput);
   completedSection.addEventListener("change", toggleTasksInput);
+
+  toDoSection.addEventListener("ondragover", allowDrop);
+  toDoSection.addEventListener("ondrop", drop);
+
+  inProgressSection.addEventListener("ondragover", allowDrop);
+  inProgressSection.addEventListener("ondrop", drop);
+
+  completedSection.addEventListener("ondragover", allowDrop);
+  completedSection.addEventListener("ondrop", drop);
 }
 
 // Add task modal
