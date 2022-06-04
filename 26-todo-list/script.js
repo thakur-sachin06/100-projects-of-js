@@ -23,6 +23,8 @@ let tasks = [
 let newTaskName = "";
 let newTaskStatus = TODO;
 
+let draggableItem;
+
 const todoTasks = tasks.filter((task) => task.status === TODO);
 const inprogressTasks = tasks.filter((task) => task.status === INPROGRESS);
 const completedTasks = tasks.filter((task) => task.status === COMPLETED);
@@ -37,6 +39,8 @@ const modalSelect = document.getElementById("modal-select");
 const toDoSection = document.getElementById("task-container");
 const inProgressSection = document.getElementById("inprogress-section");
 const completedSection = document.getElementById("completed-section");
+
+const mainToDoContainer = document.getElementById("to-do-section");
 
 function getBackgroundColor(task) {
   if (task.status === TODO) {
@@ -60,18 +64,33 @@ function toggleTasksInput(e) {
   }
 }
 
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
+function dragStart(e) {
+  draggableItem = e.target;
 }
 
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+function dragEnter(e) {
+  e.preventDefault();
 }
 
-function allowDrop(ev) {
-  ev.preventDefault();
+function dragOver(e) {
+  e.preventDefault();
+}
+
+function drop(e) {
+  const id = e.target.getAttribute("id");
+  debugger;
+  if (id === "task-container") {
+    draggableItem.childNodes[0].checked = false;
+    draggableItem.style.background = "#f1dada";
+  } else if (id === "inprogress-section") {
+    draggableItem.childNodes[0].checked = false;
+    draggableItem.style.background = "rgb(233, 243, 255)";
+  } else {
+    draggableItem.childNodes[0].checked = false;
+
+    draggableItem.style.background = "rgb(233, 243, 234)";
+  }
+  e.target.appendChild(draggableItem);
 }
 
 function createTask(task) {
@@ -98,7 +117,7 @@ function createTask(task) {
   container.appendChild(input);
   container.appendChild(label);
   container.setAttribute("draggable", true);
-  container.addEventListener("ondragstart", drag);
+  container.addEventListener("dragstart", dragStart);
   return container;
 }
 
@@ -119,14 +138,17 @@ function createTasks() {
   inProgressSection.addEventListener("change", toggleTasksInput);
   completedSection.addEventListener("change", toggleTasksInput);
 
-  toDoSection.addEventListener("ondragover", allowDrop);
-  toDoSection.addEventListener("ondrop", drop);
+  mainToDoContainer.addEventListener("dragenter", dragEnter);
+  mainToDoContainer.addEventListener("dragover", dragOver);
+  mainToDoContainer.addEventListener("drop", drop);
 
-  inProgressSection.addEventListener("ondragover", allowDrop);
-  inProgressSection.addEventListener("ondrop", drop);
+  inProgressSection.addEventListener("dragenter", dragEnter);
+  inProgressSection.addEventListener("dragover", dragOver);
+  inProgressSection.addEventListener("drop", drop);
 
-  completedSection.addEventListener("ondragover", allowDrop);
-  completedSection.addEventListener("ondrop", drop);
+  completedSection.addEventListener("dragenter", dragEnter);
+  completedSection.addEventListener("dragover", dragOver);
+  completedSection.addEventListener("drop", drop);
 }
 
 // Add task modal

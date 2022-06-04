@@ -96,3 +96,7 @@
   border-radius: 4px;
   font-size: 18px;
 }
+
+#task-container {
+  min-height: 200px;
+}
