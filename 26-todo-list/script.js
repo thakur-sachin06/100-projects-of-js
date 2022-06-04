@@ -78,7 +78,6 @@ function dragOver(e) {
 
 function drop(e) {
   const id = e.target.getAttribute("id");
-  debugger;
   if (id === "task-container") {
     draggableItem.childNodes[0].checked = false;
     draggableItem.style.background = "#f1dada";
@@ -86,8 +85,7 @@ function drop(e) {
     draggableItem.childNodes[0].checked = false;
     draggableItem.style.background = "rgb(233, 243, 255)";
   } else {
-    draggableItem.childNodes[0].checked = false;
-
+    draggableItem.childNodes[0].checked = true;
     draggableItem.style.background = "rgb(233, 243, 234)";
   }
   e.target.appendChild(draggableItem);
