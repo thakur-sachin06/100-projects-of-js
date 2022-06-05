@@ -191,3 +191,5 @@ mainAddTaskBtn.addEventListener("click", () => {
 createTasks();
 
 // start drag and drop feature
+
+// Local Storage Start
