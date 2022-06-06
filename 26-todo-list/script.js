@@ -213,8 +213,8 @@ mainAddTaskBtn.addEventListener("click", () => {
 });
 
 createTasks();
-// Local Storage Start
 
+// storing in local storage just before tab is closed or refereshing the page
 window.addEventListener("beforeunload", () =>
   localStorage.setItem("tasks", JSON.stringify(userTasks))
 );
