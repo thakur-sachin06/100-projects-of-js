@@ -24,10 +24,13 @@ let newTaskName = "";
 let newTaskStatus = TODO;
 
 let draggableItem;
+let localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+let userTasks =
+  localStorageTasks && localStorageTasks.length ? localStorageTasks : tasks;
 
-const todoTasks = tasks.filter((task) => task.status === TODO);
-const inprogressTasks = tasks.filter((task) => task.status === INPROGRESS);
-const completedTasks = tasks.filter((task) => task.status === COMPLETED);
+const todoTasks = userTasks.filter((task) => task.status === TODO);
+const inprogressTasks = userTasks.filter((task) => task.status === INPROGRESS);
+const completedTasks = userTasks.filter((task) => task.status === COMPLETED);
 
 const mainAddTaskBtn = document.getElementById("main-btn");
 
@@ -52,16 +55,30 @@ function getBackgroundColor(task) {
   }
 }
 
+function updateTasks(id, status) {
+  debugger;
+  const taskId = id.split("-")[1];
+  userTasks.map((elt) => {
+    if (elt.id == taskId) {
+      elt.status = status;
+    }
+  });
+}
+
 function toggleTasksInput(e) {
   const isChecked = e.target.checked;
   const toggledTask = document.getElementById(e.target.getAttribute("id"));
+  let newStatus;
   if (isChecked) {
     completedSection.appendChild(toggledTask);
+    newStatus = "COMPLETED";
     toggledTask.style.background = "rgb(233, 243, 234)";
   } else {
     toDoSection.appendChild(toggledTask);
     toggledTask.style.background = "#f1dada";
+    newStatus = "TODO";
   }
+  updateTasks(e.target.getAttribute("id"), newStatus);
 }
 
 function dragStart(e) {
@@ -78,17 +95,24 @@ function dragOver(e) {
 
 function drop(e) {
   const id = e.target.getAttribute("id");
+  let newStatus;
   if (id === "task-container") {
     draggableItem.childNodes[0].checked = false;
     draggableItem.style.background = "#f1dada";
+    newStatus = TODO;
   } else if (id === "inprogress-section") {
     draggableItem.childNodes[0].checked = false;
     draggableItem.style.background = "rgb(233, 243, 255)";
+    newStatus = INPROGRESS;
   } else {
     draggableItem.childNodes[0].checked = true;
     draggableItem.style.background = "rgb(233, 243, 234)";
+    newStatus = COMPLETED;
   }
   e.target.appendChild(draggableItem);
+
+  const taskId = draggableItem.childNodes[0].getAttribute("id");
+  updateTasks(taskId, newStatus);
 }
 
 function createTask(task) {
@@ -189,7 +213,8 @@ mainAddTaskBtn.addEventListener("click", () => {
 });
 
 createTasks();
-
-// start drag and drop feature
-
 // Local Storage Start
+
+window.addEventListener("beforeunload", () =>
+  localStorage.setItem("tasks", JSON.stringify(userTasks))
+);
