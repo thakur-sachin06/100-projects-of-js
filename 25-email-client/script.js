@@ -30,6 +30,24 @@ const emails = [
     isRead: false,
     isStarred: false,
   },
+  {
+    id: 4,
+    from: "abc@gmail.com",
+    to: "xyz@gmail.com",
+    subject: "job opp",
+    body: "We have created some responsive W3.CSS templates for you to use. You are free to modify, save, share, and use them in all your projects.",
+    isRead: false,
+    isStarred: false,
+  },
+  {
+    id: 5,
+    from: "abc@gmail.com",
+    to: "xyz@gmail.com",
+    subject: "job opp",
+    body: "Greetings from me",
+    isRead: false,
+    isStarred: false,
+  },
 ];
 
 let activeEmail = emails[0].id;
