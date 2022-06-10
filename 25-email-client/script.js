@@ -51,8 +51,8 @@ const emails = [
 ];
 
 let activeEmail = emails[0].id;
-let numOfReadMails = 1;
-let numOfUnreadMails = emails.length - 2;
+let numOfReadMails = 0;
+let numOfUnreadMails = 0;
 
 const readMailsSpan = document.getElementById("read-mail-count");
 const unreadMailsSpan = document.getElementById("unread-mail-count");
@@ -64,16 +64,14 @@ const navItems = Array.from(document.getElementsByClassName("nav-item"));
 const showEmailContent = (id, item) => {
   const selectedEmail = emails.filter((email) => email.id == id);
   mainSection.innerHTML = selectedEmail[0].body;
-
+  debugger;
   if (!selectedEmail[0].isRead) {
     numOfReadMails++;
     item.classList.remove("unread-email");
     selectedEmail[0].isRead = true;
   }
   readMailsSpan.innerHTML = `${numOfReadMails} read mails`;
-  unreadMailsSpan.innerHTML = `${
-    emails.length - 1 - numOfReadMails
-  } unread mails`;
+  unreadMailsSpan.innerHTML = `${emails.length - numOfReadMails} unread mails`;
 };
 
 const toggleStarredEmail = (selectedEmailToStar) => {
