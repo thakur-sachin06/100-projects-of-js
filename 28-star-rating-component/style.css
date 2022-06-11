@@ -1,0 +1,16 @@
+#main-container {
+  padding: 20px;
+}
+
+.star {
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  border: 1px solid lightgray;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.star:hover {
+  background: gold;
+}
