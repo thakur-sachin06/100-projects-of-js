@@ -21,7 +21,6 @@
 // }
 
 // without closures
-
 function flat(arr) {
   let flattedArr = [];
   arr.forEach((element) => {
@@ -36,3 +35,36 @@ function flat(arr) {
 
 const result = flat([1, [2, [10, 20, 40, 50], [900, 1000, 2000]], 3, 4]);
 console.log(result);
+
+// in O(n) without recursiion.
+
+function arrFlat(input) {
+  const stack = [...input];
+  const res = [];
+  while (stack.length) {
+    // pop value from stack
+    const next = stack.pop();
+    if (Array.isArray(next)) {
+      // push back array items, won't modify the original input
+      stack.push(...next);
+    } else {
+      res.push(next);
+    }
+  }
+  return res.reverse();
+}
+
+// without stack.
+function flattenNonRecursion(arr) {
+  const res = [...arr];
+  let i = 0;
+
+  while (i < res.length) {
+    if (Array.isArray(res[i])) {
+      res.splice(i, 1, ...res[i]);
+    } else {
+      i++;
+    }
+  }
+  return res;
+}

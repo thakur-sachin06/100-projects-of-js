@@ -42,7 +42,7 @@ fakeApiBackend = () => {
     profile: "https://gitconnected.com/treyhuffine",
   };
 
-  if (Math.random() > 0.5) {
+  if (Math.random() > 0.1) {
     return {
       data: user,
       statusCode: 200,
@@ -60,6 +60,7 @@ fakeApiBackend = () => {
 
 makeApiCall = () => {
   return new MyPromise((resolve, reject) => {
+    console.log("api call");
     setTimeout(() => {
       let res = fakeApiBackend();
       if (res.statusCode === 200) {

@@ -13,27 +13,38 @@ const promise3 = new Promise((res, reject) => setTimeout(res, 500, "slow"));
 
 */
 
-function allPolyfill(promises) {
-  let resultArr = [];
+function myPromiseAll(taskList) {
+  //to store results
+  const results = [];
+  let promisesCompleted = 0;
   return new Promise((resolve, reject) => {
-    promises.forEach((promise) => {
-      promise
-        .then((res) => {
-          resultArr.push(res);
-          if (promises.length === resultArr.length) {
-            resolve(resultArr);
-          }
-        })
-        .catch((err) => {
-          reject(err);
-        });
+    taskList.forEach((promise, index) => {
+      // if not a promise.
+      if (!promise.then) {
+        results[index] = promise;
+        promisesCompleted++;
+        if (promisesCompleted === taskList.length) {
+          resolve(results);
+        }
+      } else {
+        promise
+          .then((val) => {
+            results[index] = val;
+            promisesCompleted += 1;
+            if (promisesCompleted === taskList.length) {
+              resolve(results);
+            }
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
     });
   });
 }
-
-allPolyfill([promise1, promise2, promise3])
-  .then((values) => console.log(values))
-  .catch((err) => console.log(err));
+myPromiseAll([promise3, promise2, promise1]).then((response) =>
+  console.log(response)
+);
 
 /*
   2 => The Promise.race()
@@ -62,29 +73,37 @@ racePolyfill([promise1, promise2])
       one another to complete successfully, or you'd always like to know the result of each promise.
 */
 
-function allSettledPolyfill(promises) {
-  let results = [];
+// allSettled without all
+function myAllSettled(taskList) {
+  //to store results
+  const results = [];
+  let promisesCompleted = 0;
   return new Promise((resolve, reject) => {
-    promises.forEach((promise) => {
-      promise
-        .then((res) => {
-          results.push({
-            status: "fulfilled",
-            value: res,
+    taskList.forEach((promise, index) => {
+      if (!promise.then) {
+        results[index] = { status: "fulfilled", value: promise };
+        results[index] = promise;
+        promisesCompleted++;
+        if (promisesCompleted === taskList.length) {
+          resolve(results);
+        }
+      } else {
+        promise
+          .then((val) => {
+            results[index] = { status: "fulfilled", value: val };
+            promisesCompleted += 1;
+            if (promisesCompleted === taskList.length) {
+              resolve(results);
+            }
+          })
+          .catch((error) => {
+            results[index] = { status: "rejected", reason: error };
+            promisesCompleted += 1;
+            if (promisesCompleted === taskList.length) {
+              resolve(results);
+            }
           });
-          if (results.length === promises.length) {
-            resolve(results);
-          }
-        })
-        .catch((err) => {
-          results.push({
-            status: "rejected",
-            reason: err,
-          });
-          if (results.length === promises.length) {
-            resolve(results);
-          }
-        });
+      }
     });
   });
 }
