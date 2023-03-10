@@ -10,9 +10,7 @@ const promise3 = new Promise((res, reject) => setTimeout(res, 500, "slow"));
   input's promises have resolved, or if the input iterable contains no promises. It rejects
   upon any of the input promises rejecting or non-promises throwing an error, and will reject with this
   first rejection message / error.
-
 */
-
 function myPromiseAll(taskList) {
   //to store results
   const results = [];

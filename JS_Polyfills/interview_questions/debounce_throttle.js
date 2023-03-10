@@ -39,7 +39,7 @@ ip.addEventListener("keyup", debounce(handleChange, 1000));
 // videos and images. Thus, we must use throttling for the scroll event.
 
 // Button click listeners
-// Remember the ATM example we used to explain throttling? We won’t be able to make any further transactions until a specified period
+// We won’t be able to make any further transactions in ATM until a specified period
 // of time has elapsed. We may also apply it to buttons within a web application. The click event listener’s callback will only run
 // when a specific amount of time has passed since the last invocation. It will help to reduce the user’s spam-clicking.
 
