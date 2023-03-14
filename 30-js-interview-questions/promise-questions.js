@@ -30,7 +30,7 @@ promise
     return v * 2;
   })
   .finally((v) => {
-    // finally will run when all then are copleted and from last then we are not returning anything so we get undefined in finally
+    // finally will run when all then are completed and from last then we are not returning anything so we get undefined in finally
     console.log(v);
     return v * 2;
   })
