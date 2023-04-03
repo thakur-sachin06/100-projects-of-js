@@ -1,101 +1,47 @@
-// Reference => https://skilled.dev/course/build-a-javascript-promise
+// // Reference => https://skilled.dev/course/build-a-javascript-promise
 
 class MyPromise {
-  constructor(executionFunction) {
+  constructor(callback) {
+    callback(this.onResolve, this.onReject);
     this.promiseChain = [];
-    this.handleError = () => {};
-    executionFunction(this.onResolve, this.onReject);
+    this.handleErr = () => {};
   }
 
-  then = (handleSuccess) => {
-    this.promiseChain.push(handleSuccess);
-    return this;
-  };
-
-  catch = (errFunction) => {
-    this.handleError = errFunction;
+  onReject = (err) => {
+    this.handleErr(err);
   };
 
   onResolve = (apiRes) => {
-    let storedValue = apiRes;
+    let storedVal = apiRes;
     try {
       if (this.promiseChain.length) {
-        this.promiseChain.forEach((func) => {
-          storedValue = func(storedValue);
+        this.promiseChain.forEach((callback) => {
+          storedVal = callback(storedVal);
         });
+        return storedVal;
       }
-    } catch (error) {
-      this.promiseChain = [];
-      this.onReject(error);
+    } catch (err) {
+      this.onReject(err);
     }
   };
 
-  onReject = (error) => {
-    this.handleError(error);
+  then = (fn) => {
+    console.log(fn, "fn");
+    this.promiseChain.push(fn);
+    return this;
+  };
+
+  catch = (errFn) => {
+    this.handleErr = errFn;
   };
 }
 
-fakeApiBackend = () => {
-  const user = {
-    username: "treyhuffine",
-    favoriteNumber: 42,
-    profile: "https://gitconnected.com/treyhuffine",
-  };
-
-  if (Math.random() > 0.1) {
-    return {
-      data: user,
-      statusCode: 200,
-    };
-  } else {
-    const error = {
-      statusCode: 404,
-      message: "Could not find user",
-      error: "Not Found",
-    };
-
-    return error;
-  }
-};
-
-makeApiCall = () => {
-  return new MyPromise((resolve, reject) => {
-    console.log("api call");
+const makApiCall = () => {
+  return new MyPromise((reslove, reject) => {
     setTimeout(() => {
-      let res = fakeApiBackend();
-      if (res.statusCode === 200) {
-        resolve(res.data);
-      } else {
-        reject(res);
-      }
-    }, 5000);
+      reslove("success");
+    }, 3000);
   });
 };
 
-makeApiCall()
-  .then((user) => {
-    console.log("In the first .then()");
-
-    return user;
-  })
-  .then((user) => {
-    console.log(
-      `User ${user.username}'s favorite number is ${user.favoriteNumber}`
-    );
-
-    return user;
-  })
-  .then((user) => {
-    console.log("The previous .then() told you the favoriteNumber");
-
-    return user.profile;
-  })
-  .then((profile) => {
-    console.log(`The profile URL is ${profile}`);
-  })
-  .then(() => {
-    console.log("This is the last then()");
-  })
-  .catch((error) => {
-    console.log(error.message, "Error");
-  });
+makApiCall().then((res) => console.log(res));
