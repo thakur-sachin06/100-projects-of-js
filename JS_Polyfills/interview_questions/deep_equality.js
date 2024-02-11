@@ -1,5 +1,4 @@
-// deeply compare objects.
-
+//! deeply compare objects.
 function areEqual(obj1, obj2) {
   let result = true;
   const keys1 = Object.keys(obj1);

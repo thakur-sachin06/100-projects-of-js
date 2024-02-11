@@ -1,24 +1,25 @@
-// function flat(arr, level) {
-//   let flatArr = [];
-//   let count = 0;
+// Polyfill for Array.prototype.flat using recursion with depth and closures
+if (!Array.prototype.flatRecursive) {
+  Array.prototype.flatRecursiveWithDepth = function (depth = 1) {
+    const result = [];
 
-//   function child(arr) {
-//     arr.map((elt) => {
-//       if (typeof elt === "object" && count < level) {
-//         count++;
-//         child(elt);
-//       } else if (typeof elt !== "object") {
-//         flatArr.push(elt);
-//       } else {
-//         flatArr.push(elt);
-//         count = 0;
-//       }
-//     });
-//   }
+    function flatten(arr, currentDepth) {
+      for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i]) && currentDepth < depth) {
+          flatten(arr[i], currentDepth + 1);
+        } else {
+          result.push(arr[i]);
+        }
+      }
+    }
 
-//   child(arr);
-//   console.log(flatArr);
-// }
+    flatten(this, 0);
+    return result;
+  };
+}
+
+const nestedArray = [1, [2, [3, 4, [5, 6]], 7], 8];
+console.log(nestedArray.flatRecursiveWithDepth(1));
 
 // without closures
 function flat(arr) {
@@ -37,7 +38,6 @@ const result = flat([1, [2, [10, 20, 40, 50], [900, 1000, 2000]], 3, 4]);
 console.log(result);
 
 // in O(n) without recursiion.
-
 function arrFlat(input) {
   const stack = [...input];
   const res = [];

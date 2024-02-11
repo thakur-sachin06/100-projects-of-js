@@ -3,7 +3,7 @@
 //   // some async work
 //   cb()
 // }
-// Implement Scheduler
+//! Implement Scheduler
 // At most n tasks should be running in parallel
 // expose a addTask method to add new tasks to the scheduler
 // Need to keep a queue of tasks that have been added by the
@@ -66,67 +66,3 @@ s1.addTask(T2);
 s1.addTask(T3);
 s1.addTask(T4);
 s1.addTask(T5);
-
-//Q- check if path exists in an object or not
-const obj = {
-  a: {
-    b: { c: "d" },
-  },
-};
-const path = "a.b.c.d";
-function check(path, obj) {
-  const pathKeys = path.split(".");
-  if (obj[pathKeys[0]]) {
-    if (pathKeys.length === 1) {
-      return obj[pathKeys[0]];
-    } else {
-      const foundedKey = pathKeys.shift();
-      return check(pathKeys.join("."), obj[foundedKey]);
-    }
-  } else {
-    return "default";
-  }
-}
-
-console.log(check(path, obj), "final");
-
-//Q- defer
-function defer(fn, delay) {
-  let queue = [];
-
-  function trigger() {
-    timer = undefined;
-    let queueData = [...queue];
-    queue = [];
-    let allArgs = queueData.map((i) => i.args);
-
-    fn(allArgs).then((responses) => {
-      responses.forEach((response, i) => {
-        queueData[i].resolve(response);
-      });
-    });
-  }
-
-  let timer;
-
-  return function (...args) {
-    let resolve, reject;
-    let p = new Promise((res, rej) => {
-      resolve = res;
-      reject = rej;
-    });
-
-    queue.push({ args, resolve, reject });
-
-    if (!timer) {
-      timer = setTimeout(trigger, delay);
-    }
-
-    return p;
-  };
-}
-function getAsset({}) {
-  return new Promise((res, rej) => {});
-}
-let getAssetDefered = defer(getAsset);
-getAssetDefered();
