@@ -1,20 +1,36 @@
 // Debounce
+
+// ! https://medium.com/@griffinmichl/implementing-debounce-in-javascript-eab51a12311e
+
 const ip = document.getElementById("ip");
 
 const handleChange = (e) => {
   console.log(e.target.value);
 };
 
-const debounce = (callback, timer = 1000) => {
+/*
+  Edge Cases
+
+The main pitfall in this question is invoking the callback function with the correct this, the value of this when the
+debounced function was called. Since the callback function will be invoked in a timeout, we need to ensure that the
+first argument to func.apply()/func.call() is the right value. There are two ways to achieve this:
+
+?1=>  Use another variable to keep a reference to this and access this via that variable from within the setTimeout callback.
+      This is the traditional way of preserving this before arrow functions existed.
+?2=>  Use an arrow function to declare the setTimeout callback where the this value within it has lexical scope.
+      The value of this within arrow functions is bound to the context in which the function is created, not to the environment
+      in which the function is called.
+
+*/
+
+function debounce(func, wait) {
   let timerId;
-  return function () {
-    const args = [...arguments];
-    if (timerId) {
-      clearTimeout(timerId);
-    }
-    timerId = setTimeout(() => callback.apply(null, args), timer);
+  return function (...args) {
+    clearTimeout(timerId);
+    const context = this;
+    timerId = setTimeout(() => func.call(context, ...args), wait);
   };
-};
+}
 
 ip.addEventListener("keyup", debounce(handleChange, 1000));
 
