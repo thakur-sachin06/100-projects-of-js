@@ -64,15 +64,18 @@ ip.addEventListener("keyup", debounce(handleChange, 1000));
 // advantageous. By rate limiting the calling function, it would eliminate unnecessary API requests to the server.
 
 const throttle = (callback, timer = 1000) => {
-  let timerId;
-  return function () {
-    const args = [...arguments];
-    if (timerId) {
+  let shouldThrottle = false;
+
+  return function (...args) {
+    if (shouldThrottle) {
       return;
     }
-    timerId = setTimeout(() => {
-      callback.apply(null, args);
-      timerId = undefined;
-    }, timer);
+    const context = this;
+    shouldThrottle = true;
+    setTimeout(function () {
+      shouldThrottle = false;
+    }, wait);
+
+    func.call(context, ...args);
   };
 };
