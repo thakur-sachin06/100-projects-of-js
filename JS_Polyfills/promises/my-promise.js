@@ -1,4 +1,4 @@
-// // Reference => https://skilled.dev/course/build-a-javascript-promise
+//? https://skilled.dev/course/build-a-javascript-promise
 
 class MyPromise {
   constructor(callback) {
