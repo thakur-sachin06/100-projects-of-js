@@ -9,12 +9,13 @@ function get(objectParam, pathParam, defaultValue) {
   let length = path.length;
 
   while (objectParam != null && index < length) {
+    // if we get null as value no need to check furthur
     objectParam = objectParam[path[index]];
     index++;
   }
   let value;
-  console.log(index, length, "index");
   if (index && index === length) {
+    // if index === length means we have found the value.
     value = objectParam;
   } else {
     value = undefined;
