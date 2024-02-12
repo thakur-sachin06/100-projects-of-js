@@ -1,5 +1,4 @@
-// bind polyfill.
-
+//! bind polyfill.
 Function.prototype.bindPolyfill = function (context, ...args) {
   let func = this;
   return function () {
@@ -9,17 +8,16 @@ Function.prototype.bindPolyfill = function (context, ...args) {
   };
 };
 
-// without apply
-Function.prototype.myBind = function (context, ...args) {
-  /* Since we are not using call/apply, create a reference of
-    binding method within the context, and method will be invoked
-    as context.fn() */
-  context.fn = this;
-  return function (...funcArgs) {
-    context.fn(...[...args, ...funcArgs]);
+//! without apply
+Function.prototype.myBind = function (thisArg, ...argArray) {
+  if (thisArg === null) {
+    thisArg = {};
+  }
+  thisArg.fn = this;
+  return function (...args) {
+    return thisArg.fn(...argArray, ...args);
   };
 };
-
 let obj = {
   name: "Sachin",
 };
@@ -31,7 +29,7 @@ function myFunc(lastname, id) {
 const customBind = myFunc.bindPolyfill(obj, "Thakur", 34);
 customBind();
 
-//call Polyfill
+//! call Polyfill
 Function.prototype.myCall = function (context, ...args) {
   context.fn = this;
   context.fn(...args);
@@ -39,11 +37,18 @@ Function.prototype.myCall = function (context, ...args) {
 
 myFunc.myCall(obj, "Thakur", 36);
 
-//apply polyfill
-
+//! apply polyfill
 Function.prototype.myApply = function (context, args) {
+  if (context === null) {
+    context = {};
+  }
   context.fn = this;
   context.fn(...args);
 };
 
 myFunc.myApply(obj, ["Thakur", 36]);
+
+//! apply polyfill with call
+Function.prototype.myApply = function (thisArg, argArray = []) {
+  return this.call(thisArg, ...argArray);
+};
